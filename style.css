@@ -112,7 +112,7 @@ body, html {
 /* Container für die Ansichten */
 .view-container {
     background-color: var(--container-bg);
-    padding: 2rem 3rem;
+    padding: 3.5rem 3rem 2rem;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     width: 90%;
@@ -220,7 +220,7 @@ body, html {
 #predefined-checklist {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0.25rem 2rem; /* Reihen- und Spaltenabstand */
+    gap: 0.1rem 2rem; /* Reihen- und Spaltenabstand */
     text-align: left;
     margin-bottom: 2rem;
 }
