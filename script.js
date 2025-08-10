@@ -127,20 +127,29 @@ pauseBtn.addEventListener('click', togglePause);
 plusOneBtn.addEventListener('click', addMinute);
 minusOneBtn.addEventListener('click', subtractMinute);
 
-// Dark Mode Toggle
-const darkModeToggle = document.getElementById('dark-mode-toggle');
-darkModeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    const isDarkMode = document.body.classList.contains('dark-mode');
-    localStorage.setItem('darkMode', isDarkMode);
-    darkModeToggle.textContent = isDarkMode ? '☀️' : '🌙';
-});
-
-// Check for saved dark mode preference
+// Dark Mode Logic
 window.addEventListener('DOMContentLoaded', () => {
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+
+    // Function to set dark mode state
+    const setDarkMode = (isDark) => {
+        if (isDark) {
+            document.body.classList.add('dark-mode');
+            darkModeToggle.checked = true;
+        } else {
+            document.body.classList.remove('dark-mode');
+            darkModeToggle.checked = false;
+        }
+    };
+
+    // Check for saved dark mode preference
     const isDarkMode = localStorage.getItem('darkMode') === 'true';
-    if (isDarkMode) {
-        document.body.classList.add('dark-mode');
-        darkModeToggle.textContent = '☀️';
-    }
+    setDarkMode(isDarkMode);
+
+    // Listener for toggle switch
+    darkModeToggle.addEventListener('change', () => {
+        const isChecked = darkModeToggle.checked;
+        localStorage.setItem('darkMode', isChecked);
+        setDarkMode(isChecked);
+    });
 });
