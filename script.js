@@ -126,3 +126,21 @@ timeInput.addEventListener('keyup', (event) => { if (event.key === 'Enter') star
 pauseBtn.addEventListener('click', togglePause);
 plusOneBtn.addEventListener('click', addMinute);
 minusOneBtn.addEventListener('click', subtractMinute);
+
+// Dark Mode Toggle
+const darkModeToggle = document.getElementById('dark-mode-toggle');
+darkModeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDarkMode);
+    darkModeToggle.textContent = isDarkMode ? '☀️' : '🌙';
+});
+
+// Check for saved dark mode preference
+window.addEventListener('DOMContentLoaded', () => {
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+        darkModeToggle.textContent = '☀️';
+    }
+});
