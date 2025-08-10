@@ -29,9 +29,6 @@ body.dark-mode {
 }
 
 .dark-mode-slider {
-    position: absolute;
-    top: 20px;
-    right: 20px;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -112,7 +109,7 @@ body, html {
 /* Container für die Ansichten */
 .view-container {
     background-color: var(--container-bg);
-    padding: 3.5rem 3rem 2rem;
+    padding: 2rem 3rem;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     width: 90%;
@@ -120,13 +117,23 @@ body, html {
     transition: all 0.3s ease-in-out;
 }
 
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem; /* Abstand zum p-Tag darunter */
+}
+
 /* Einstellungsansicht */
 #settings-view h1, #settings-view h2 {
-    margin-top: 0;
     color: var(--primary-color);
     text-align: center;
 }
-#settings-view h1 { font-size: 2.5rem; }
+#settings-view h1 {
+    font-size: 2.5rem;
+    margin: 0; /* Entfernt Standard-Margin */
+    text-align: left; /* Stellt sicher, dass der Text linksbündig im Flex-Item ist */
+}
 #settings-view h2 { font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem; }
 
 #settings-view p {
@@ -220,7 +227,7 @@ body, html {
 #predefined-checklist {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0.1rem 2rem; /* Reihen- und Spaltenabstand */
+    gap: 0.05rem 2rem; /* Reihen- und Spaltenabstand */
     text-align: left;
     margin-bottom: 2rem;
 }
