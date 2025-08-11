@@ -9,6 +9,8 @@ const timerControls = document.getElementById('timer-controls');
 const pauseBtn = document.getElementById('pause-btn');
 const plusOneBtn = document.getElementById('plus-one-btn');
 const minusOneBtn = document.getElementById('minus-one-btn');
+const plusTenPercentBtn = document.getElementById('plus-ten-percent-btn');
+const plusTwentyPercentBtn = document.getElementById('plus-twenty-percent-btn');
 const checklistInput = document.getElementById('checklist-input');
 const checklistDisplayContainer = document.getElementById('checklist-display-container');
 const checklistDisplay = document.getElementById('checklist-display');
@@ -18,7 +20,7 @@ let timerInterval, totalSeconds, initialTotalSeconds;
 let isPaused = false;
 
 function startTimer() {
-    const minutes = parseInt(timeInput.value, 10);
+    const minutes = parseFloat(timeInput.value.replace(',', '.'));
     if (isNaN(minutes) || minutes <= 0) {
         errorMessage.textContent = 'Bitte eine gültige Zahl > 0 eingeben.';
         timeInput.focus();
@@ -47,9 +49,10 @@ function tick() {
 
     if (totalSeconds < 0) {
         clearInterval(timerInterval);
+        timerInterval = null; // Set to null to indicate it's stopped
         timeDisplay.textContent = "Bitte abgeben";
         timeDisplay.classList.remove('time-warning', 'time-danger');
-        timerControls.style.display = 'none';
+        // timerControls.style.display = 'none'; // Keep controls visible
     }
 }
 
@@ -72,22 +75,38 @@ function updateDisplay(seconds) {
 }
 
 function togglePause() {
-    if (totalSeconds < 0) return;
+    if (totalSeconds < 0) return; // Do not allow pause when timer is expired
     isPaused = !isPaused;
     pauseBtn.textContent = isPaused ? 'Weiter' : 'Pause';
 }
 
 function addMinute() {
-    if (totalSeconds < 0) return;
+    if (totalSeconds < 0) return; // Do not allow adding minutes when timer is expired
     totalSeconds += 60;
     initialTotalSeconds += 60;
     updateDisplay(totalSeconds);
 }
 
 function subtractMinute() {
-    if (totalSeconds < 0) return;
+    if (totalSeconds < 0) return; // Do not allow subtracting minutes when timer is expired
     initialTotalSeconds = Math.max(totalSeconds, initialTotalSeconds - 60);
     totalSeconds = Math.max(0, totalSeconds - 60);
+    updateDisplay(totalSeconds);
+}
+
+function addPercentage(percentage) {
+    const timeToAdd = Math.round(initialTotalSeconds * percentage);
+
+    if (totalSeconds < 0) {
+        totalSeconds = 0; // Timer war abgelaufen, starte bei 0
+        timerControls.style.display = 'flex'; // Blende Steuerung wieder ein
+        if (!timerInterval) { // Starte Intervall neu, falls es gestoppt wurde
+            timerInterval = setInterval(tick, 1000);
+        }
+    }
+    totalSeconds += timeToAdd;
+    // initialTotalSeconds wird absichtlich nicht erhöht,
+    // da sich die Prozente auf die ursprünglich eingestellte Zeit beziehen sollen.
     updateDisplay(totalSeconds);
 }
 
@@ -126,6 +145,9 @@ timeInput.addEventListener('keyup', (event) => { if (event.key === 'Enter') star
 pauseBtn.addEventListener('click', togglePause);
 plusOneBtn.addEventListener('click', addMinute);
 minusOneBtn.addEventListener('click', subtractMinute);
+plusTenPercentBtn.addEventListener('click', () => addPercentage(0.10));
+plusTwentyPercentBtn.addEventListener('click', () => addPercentage(0.20));
+
 
 // Dark Mode Logic
 window.addEventListener('DOMContentLoaded', () => {
