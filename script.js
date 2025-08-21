@@ -52,6 +52,7 @@ function tick() {
         timerInterval = null; // Set to null to indicate it's stopped
         timeDisplay.textContent = "Bitte abgeben";
         timeDisplay.classList.remove('time-warning', 'time-danger');
+        timeDisplay.classList.add('time-expired');
         // timerControls.style.display = 'none'; // Keep controls visible
     }
 }
@@ -63,7 +64,10 @@ function updateDisplay(seconds) {
     const formattedTime = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
     timeDisplay.textContent = formattedTime;
 
-    timeDisplay.classList.remove('time-warning', 'time-danger');
+    // Clear all dynamic classes first
+    timeDisplay.classList.remove('time-warning', 'time-danger', 'time-expired');
+
+    // Then add the appropriate class back if needed
     if (initialTotalSeconds > 0) {
         const percentage = (seconds / initialTotalSeconds);
         if (percentage <= 0.10) {
