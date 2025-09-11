@@ -115,10 +115,10 @@ function addPercentage(percentage) {
 }
 
 function renderChecklist() {
-    // Vordefinierte Regeln sammeln (haben bereits "!")
+    // Vordefinierte Regeln sammeln
     const selectedPredefinedItems = [];
-    document.querySelectorAll('.predefined-rule-cb:checked').forEach(checkbox => {
-        selectedPredefinedItems.push(checkbox.nextElementSibling.textContent);
+    document.querySelectorAll('.predefined-rule').forEach(ruleElement => {
+        selectedPredefinedItems.push(ruleElement.textContent);
     });
 
     // Eigene Notizen sammeln und "!" hinzufügen
